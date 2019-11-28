@@ -1,0 +1,30 @@
+version: "3"
+services:
+  database:
+    image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "32770:5432"
+    environment:
+      POSTGRES_DATABASE: demo
+      POSTGRES_USER: mike
+      POSTGRES_PASSWORD: mike
+  web:
+    build: .
+    image: halvong/demo
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    #command: >
+    #  gunicorn -b 0.0.0.0:8000
+    #    --access-logfile -
+    #    --reload
+    #    wisdompets.wsgi:application
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+volumes:
+  db-data:

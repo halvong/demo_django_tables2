@@ -1,0 +1,7 @@
+Django==2.2.7
+django-tables2==2.1.1
+pytz==2019.3
+sqlparse==0.3.0
+psycopg2-binary
+django-humanize
+#pkg-resources==0.0.0
