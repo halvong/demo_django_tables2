@@ -14,5 +14,3 @@ class RevenueRecord(models.Model):
     clicks = models.IntegerField()
     revenue = models.FloatField()
 
-    def get_absolute_url(self):
-        return reverse('demo:get_date', args=[self.date.year, self.date.month, self.date.day ])

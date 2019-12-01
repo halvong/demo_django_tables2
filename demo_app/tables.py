@@ -29,7 +29,7 @@ class RevenueTable(tables.Table):
 
 class DateTable(tables.Table):
     date = DatePublisherColumn(attrs={"th": {"style": "background-color:lightgray"}})
-    publisher__name = tables.Column(attrs={"th": {"style": "background-color:lightgray; text-transform: capitalize"},
+    publisher__name = tables.Column(verbose_name="publisher",attrs={"th": {"style": "background-color:lightgray; text-transform: capitalize"},
                                            "td": {"style": "text-transform: capitalize"},
                                            })
     revenue_sum = NumberColumn(attrs={"th": {"style": "background-color:lightgray; text-transform: capitalize"}})
@@ -43,14 +43,14 @@ class DateTable(tables.Table):
         order_by = 'publisher__name'
 
 class PublisherTable(tables.Table):
-    source__name = tables.Column(attrs={"th": {"style": "background-color:lightgray; text-transform: capitalize"},
-                                           "td": {"style": "text-transform: capitalize"},
-                                       })
+    source__name = tables.Column(verbose_name="source",attrs={"th": {"style": "background-color:lightgray; text-transform: capitalize"},
+                                                              "td": {"style": "text-transform: capitalize"},
+                                                            })
     revenue_sum = NumberColumn(attrs={"th": {"style": "background-color:lightgray; text-transform: capitalize"}})
     clicks_sum = tables.Column(attrs={"th": {"style": "background-color:lightgray; text-transform: capitalize"}})
 
     class Meta:
-        model =  RevenueRecord
+        model = RevenueRecord
         template_name = "django_tables2/bootstrap.html"
         attrs = {'class': "table table-striped"}
         fields = ("source__name","revenue_sum","clicks_sum")

@@ -10,6 +10,7 @@ import datetime
 class IndexView(View):
     def get(self, request):
         table = RevenueTable(RevenueRecord.objects.values('date').annotate(revenue_sum=Sum('revenue'), clicks_sum=Sum('clicks')).order_by('-date'))
+
         RequestConfig(request).configure(table)
         table.paginate(page=request.GET.get("page", 1), per_page=15)
         return render(request, 'index_template.html', {'table': table})
@@ -19,6 +20,7 @@ class DateView(View):
         ddate = datetime.datetime.strptime(q_date,"%Y-%m-%d").strftime("%B %d, %Y")
         table = DateTable(RevenueRecord.objects.filter(date=q_date).values('date', 'publisher','publisher__name').annotate(revenue_sum=Sum('revenue'), clicks_sum=Sum('clicks')).order_by('publisher__name'))
 
+        RequestConfig(request).configure(table)
         return render(request, 'date_template.html', {'table': table, 'q_date': ddate})
 
 class PublisherView(SingleTableView):
@@ -27,4 +29,5 @@ class PublisherView(SingleTableView):
         ddate = datetime.datetime.strptime(q_date,"%Y-%m-%d").strftime("%B %d, %Y")
         table = PublisherTable(RevenueRecord.objects.filter(date=q_date,publisher=publisher).values("source__name").annotate(revenue_sum=Sum('revenue'), clicks_sum=Sum('clicks')).order_by('source__name'))
 
-        return render(request, 'publisher_template.html', {'table': table})
+        RequestConfig(request).configure(table)
+        return render(request, 'publisher_template.html', {'table': table, 'q_date': ddate, 'publisher': publisher})

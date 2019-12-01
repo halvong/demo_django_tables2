@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 </head>
 <body>
+<h2><a href="{% url 'demo:index' %}">Monthly Report</a></h2>
+<h3>{{ q_date }}</h3>
 {% render_table table %}
 </body>
 </html
